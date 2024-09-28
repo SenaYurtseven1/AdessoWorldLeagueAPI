@@ -22,6 +22,14 @@ Proje, katmanlı mimariyi izler. Bu yapı sayesinde uygulama, her katmanda farkl
 Veritabanı işlemleri, **Repository Pattern** kullanılarak soyutlanmıştır. Her veri modeli için bir repository sınıfı bulunur (örneğin, `TeamRepository` takımlarla ilgili işlemleri yönetir). Bu pattern, veritabanı işlemlerini iş mantığından ayırır ve daha modüler bir yapı sağlar.
 
 ---
+## Veritabanı Kullanımı: Azure SQL Server
+
+Bu proje, veritabanı yönetimi için **Azure SQL Server** kullanır. Proje, bulut üzerinde çalışan bir veritabanı ile etkileşime geçerek takımları, grupları ve çekiliş sonuçlarını kaydeder.
+
+- **Azure SQL Server** kullanılarak, veritabanı işlemleri güvenli ve ölçeklenebilir bir şekilde gerçekleştirilir.
+- **Entity Framework Core** ile Azure SQL Server üzerinde sorgular yürütülür ve CRUD işlemleri yapılır.
+
+---
 
 ## API Uç Noktaları:
 
