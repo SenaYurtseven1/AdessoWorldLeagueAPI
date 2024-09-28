@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdessoWorldLeagueAPI.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240928134059_InitialCreate")]
+    [Migration("20240928155338_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,23 @@ namespace AdessoWorldLeagueAPI.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.AdessoGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdessoGroups");
+                });
 
             modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Country", b =>
                 {
@@ -42,7 +59,7 @@ namespace AdessoWorldLeagueAPI.DataAccess.Migrations
                     b.ToTable("Country");
                 });
 
-            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Group", b =>
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Draw", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,13 +67,26 @@ namespace AdessoWorldLeagueAPI.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("GroupName")
+                    b.Property<DateTime>("DrawDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DrawnBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Draw");
                 });
 
             modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Team", b =>
@@ -86,24 +116,58 @@ namespace AdessoWorldLeagueAPI.DataAccess.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Draw", b =>
+                {
+                    b.HasOne("AdessoWorldLeagueAPI.Domain.Models.AdessoGroup", "Group")
+                        .WithMany("Draws")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdessoWorldLeagueAPI.Domain.Models.Team", "Team")
+                        .WithMany("Draws")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Team", b =>
                 {
                     b.HasOne("AdessoWorldLeagueAPI.Domain.Models.Country", "Country")
-                        .WithMany()
+                        .WithMany("Teams")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AdessoWorldLeagueAPI.Domain.Models.Group", null)
+                    b.HasOne("AdessoWorldLeagueAPI.Domain.Models.AdessoGroup", "AdessoGroup")
                         .WithMany("Teams")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AdessoGroup");
 
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Group", b =>
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.AdessoGroup", b =>
+                {
+                    b.Navigation("Draws");
+
+                    b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Country", b =>
                 {
                     b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("AdessoWorldLeagueAPI.Domain.Models.Team", b =>
+                {
+                    b.Navigation("Draws");
                 });
 #pragma warning restore 612, 618
         }

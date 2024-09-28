@@ -1,4 +1,5 @@
-﻿using AdessoWorldLeagueAPI.Domain.Interfaces;
+﻿using AdessoWorldLeagueAPI.DataAccess.Context;
+using AdessoWorldLeagueAPI.Domain.Interfaces;
 using AdessoWorldLeagueAPI.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace AdessoWorldLeagueAPI.DataAccess.Repositories
 {
     public class TeamRepository : BaseRepository<Team>, ITeamRepository
     {
-        public TeamRepository() {
-            _entites = new List<Team>();
+        public TeamRepository(AppDbContext context) : base(context)
+        {
         }
     }
 }

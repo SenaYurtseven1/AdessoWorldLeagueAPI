@@ -9,6 +9,6 @@ namespace AdessoWorldLeagueAPI.Business.Interfaces
 {
     public interface ILeagueService
     {
-        Task<List<Group>> GenerateGroupAsync(int numberOfGroups, int teamsPerGroup);
+        Task<object> GenerateGroupAsync(int numberOfGroups, string DrawName, string DrawSurname);
     }
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdessoWorldLeagueAPI.Domain.Models
 {
-    public class Group : BaseEntity
+    public class AdessoGroup : BaseEntity
     {
         public string GroupName { get; set; }
-        public List<Team> Teams { get; set; }
+        public ICollection<Team> Teams { get; set; } = new List<Team>();
+        public ICollection<Draw> Draws { get; set; } = new List<Draw>();
     }
 }

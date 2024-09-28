@@ -5,14 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AdessoWorldLeagueAPI.DataAccess.Repositories
 {
-    public class GroupRepository : BaseRepository<AdessoGroup>, IGroupRepository
+    public class CountryRepository : BaseRepository<Country>, ICountryRepository
     {
-        public GroupRepository(AppDbContext context) : base(context)
+        public CountryRepository(AppDbContext context) : base(context)
         {
         }
     }
