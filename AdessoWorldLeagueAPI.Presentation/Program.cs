@@ -1,14 +1,20 @@
 using AdessoWorldLeagueAPI.Business.Interfaces;
+using AdessoWorldLeagueAPI.Business.Services;
+using AdessoWorldLeagueAPI.DataAccess.Context;
+using AdessoWorldLeagueAPI.DataAccess.Repositories;
 using AdessoWorldLeagueAPI.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<ITeamRepository, ITeamRepository>();
-builder.Services.AddScoped<IGroupRepository, IGroupRepository>();
-builder.Services.AddScoped<ILeagueService, ILeagueService>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<ILeagueService, LeagueService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
