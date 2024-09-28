@@ -14,7 +14,7 @@ namespace AdessoWorldLeagueAPI.DataAccess
         public AppDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer("Server=tcp:adessosqlserver.database.windows.net,1433;Initial Catalog=AdessoLeagueDB;Persist Security Info=False;User ID=admin_admin;Password=shiningSHINee1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=tcp:adessosqlserver.database.windows.net,1433;Initial Catalog=AdessoLeagueDB;Persist Security Info=False;User ID=admin_admin;Password=AdessoWorldLeague1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
             return new AppDbContext(optionsBuilder.Options);
         }
